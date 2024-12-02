@@ -154,13 +154,13 @@
       try {
         let expression = display.value.replace(/×/g, '*').replace(/÷/g, '/');
         
-        // Enhanced mathematical functions
+        // Correzione per funzioni matematiche
         expression = expression.replace(/sqrt\((.*?)\)/g, 'Math.sqrt($1)')
-                               .replace(/sin\((.*?)\)/g, 'Math.sin($1)')
-                               .replace(/cos\((.*?)\)/g, 'Math.cos($1)')
-                               .replace(/tan\((.*?)\)/g, 'Math.tan($1)');
+                               .replace(/sin\((.*?)\)/g, 'Math.sin($1 * Math.PI / 180)') // Conversione in radianti
+                               .replace(/cos\((.*?)\)/g, 'Math.cos($1 * Math.PI / 180)') // Conversione in radianti
+                               .replace(/tan\((.*?)\)/g, 'Math.tan($1 * Math.PI / 180)'); // Conversione in radianti
 
-        // Verify parentheses match
+        // Verifica per la parità delle parentesi
         if ((expression.match(/\(/g) || []).length !== (expression.match(/\)/g) || []).length) {
           throw new Error('Parentesi non corrispondenti');
         }
